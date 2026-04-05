@@ -5,6 +5,33 @@ default persistent.loopending = False
 define y = Character("You", voice_tag="you", color="#51e019ff")
 define c = Character("Caller", voice_tag="caller", color="#ff2626")
 
+image nightbedroom:
+    "images/Dark Bedroom.jpg"
+
+image footprints:
+    "images/Footprints.jpg"
+
+image frontdoor:
+    "images/Front Door.jpg"
+
+image incoming:
+    "images/Incoming Call.jpg"
+
+image morningroom:
+    "images/Morning Bedroom.jpg"
+
+image oncall:
+    "images/On Call.jpg"
+
+image persontowards:
+    "images/Person Under Lamp Post - Looking Towards.jpg"
+
+image personlamp:
+    "images/Person Under Lamp Post.jpg"
+
+image phoneon:
+    "images/Phone On.jpg"
+
 $name = ""
 
 label start:
@@ -16,15 +43,19 @@ label start:
         "Seems like you've been here before :)"
 
 label game:
+    scene nightbedroom
+
     "It is 2:13 AM."
 
     "You are trying to sleep."
+
+    play sound "audio/vibrate.opus"
 
     "Your phone suddenly vibrates on the bedside table."
 
     "You look at the screen."
 
-    # image of phone screen = caller is you
+    scene incoming
 
     "You stare at it for a second, confused."
 
@@ -37,11 +68,13 @@ label game:
 label answer:
     "You answer slowly."
 
+    scene oncall
+
     y "\"Hello?\""
 
-    "There is static for a second."
+    "There is static for a while."
 
-    # static sfx
+    play sound "audio/static.opus"
 
     c "\"Don't hang up. You need to listen to me.\""
 
@@ -63,12 +96,16 @@ label answer:
 
     c "\"Please... Just trust me...\""
 
+    play sound "audio/knock.opus"
+
     "A few seconds later, there is a loud knock from downstairs."
 
-    # knocking sfx
+    jump knock
 
 label decline:
     "You reject the call."
+
+    scene nightbedroom
 
     "The room goes silent."
 
@@ -78,11 +115,15 @@ label decline:
 
     "You play it."
 
+    scene oncall
+
     c "(whispering) \"Don't answer the door.\""
+
+    play sound "audio/knock.opus"
 
     "There's a knock downstairs."
 
-    # knocking sfx
+    jump knock
 
 label knock:
     "The knocking is slow and deliberate."
@@ -93,8 +134,9 @@ label knock:
 
     "Like whoever is outside knows you are awake."
 
-    # vibration sfx
-    # image of phone screen = caller is you
+    play sound "audio/vibrate.opus"
+
+    scene incoming
 
     menu:
         "Answer":
@@ -104,6 +146,8 @@ label knock:
 
 label answer2:
     "You answer."
+
+    scene oncall
 
     c "\"Good, you still have time.\""
 
@@ -115,7 +159,7 @@ label answer2:
     c "\"Now..."
     c "\"Everything seems to be going wrong.\""
 
-    # louder knocking sfx
+    play sound "audio/knock.opus"
 
     "You hear another knock."
 
@@ -130,6 +174,8 @@ label answer2:
             jump badending
 
 label decline2:
+    scene personlamp
+
     "You ignore the call and creep towards the window."
     
     "Peeking around the curtain you see someone standing at your front door, underneath the streetlight."
@@ -138,11 +184,13 @@ label decline2:
 
     "You can't get a clear look at their face."
 
+    play sound "audio/vibrate.opus"
+
     "Your phone starts ringing again behind you."
 
-    # vibrating sfx
-
     "You glance between the screen and the figure outside."
+
+    scene persontowards
 
     "The figure turns its head slowly towards your window."
 
@@ -159,6 +207,8 @@ label decline2:
             jump badending
 
 label safeending:
+    scene nightbedroom
+
     "You lock your bedroom door and stay completely silent."
 
     "The knocking continues for a while."
@@ -186,6 +236,8 @@ label safeending:
     return
 
 label badending:
+    scene frontdoor
+
     "You reach the front door."
 
     "The hallway feels colder with each step."
@@ -194,9 +246,11 @@ label badending:
 
     "Nobody is there."
 
+    scene phoneon
+
     "You look down and see your phone lying on the doorstep, screen on."
 
-    # image of phone screen = caller is you
+    scene oncall
 
     "You look up, someone is standing at the end of the road."
 
@@ -211,6 +265,8 @@ label badending:
     return
 
 label loopending:
+    scene nightbedroom
+
     "You hide and wait."
 
     "Eventually everything goes quiet."
@@ -220,6 +276,10 @@ label loopending:
     "It begins dialling a number automatically..."
 
     "Your own number..."
+
+    scene oncall
+
+    play sound "audio/vibrate.opus"
 
     "You hear a phone start to ring somewhere else in the room."
 
