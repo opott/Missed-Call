@@ -42,6 +42,17 @@ label start:
     if persistent.safeending == True or persistent.badending == True or persistent.loopending == True:
         "Seems like you've been here before :)"
 
+        "Endings found:"
+
+        if persistent.safeending:
+            " - Morning"
+        if persistent.badending:
+            " - Too Late"
+        if persistent.loopending:
+            " - Loop"
+
+    jump game
+
 label game:
     scene nightbedroom
 
@@ -88,7 +99,7 @@ label answer:
 
     "You think this is a prank, but the caller keeps speaking quickly, like they're in danger."
 
-    c "\"Somebody if going to knock on your front door... Don't answer it...\""
+    c "\"Somebody is going to knock on your front door... Don't answer it...\""
 
     "You bolt upright in bed."
 
@@ -153,10 +164,10 @@ label answer2:
 
     y "\"Time for what!?!?\""
 
-    c "\"To avoid making the same mistake..."
-    c "\"See, I answered the door..."
-    c "\"The person outside never spoke..."
-    c "\"Now..."
+    c "\"To avoid making the same mistake...\""
+    c "\"See, I answered the door...\""
+    c "\"The person outside never spoke...\""
+    c "\"Now...\""
     c "\"Everything seems to be going wrong.\""
 
     play sound "audio/knock.opus"
